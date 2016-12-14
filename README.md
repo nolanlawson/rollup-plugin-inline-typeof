@@ -49,7 +49,7 @@ if (isUndefined(foo) && isNull(foo)) {
 }
 ```
 
-Fancier:
+Or we can get fancier:
 
 ```js
 if (typeof foo === 'undefined' && foo === null) {
@@ -65,11 +65,8 @@ Output:
 
 ```js
 function isUndefined (x) { return typeof x === "undefined" }
-
 function isFunction (x) { return typeof x === "function" }
-
 function isBoolean (x) { return typeof x === "boolean" }
-
 function isNull (x) { return x === null }
 
 if (isUndefined(foo) && isNull(foo)) {
