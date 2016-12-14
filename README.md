@@ -90,10 +90,13 @@ of the optimizations they used. This one caught my eye:
 > We found that this really helped improve bundle size, and in some cases it also improved JIT performance.
 
 You can see how Inferno does this using [this helper script](https://github.com/trueadm/inferno/blob/adcd7a1bd98590224afe0b51c96be0995135477a/src/shared.ts). However, replacing all `typeof` invocations
-in a large codebase is time-consuming, and results in harder-to-maintain code. Wouldn't it be nice if we could automate this?
+in a large codebase is time-consuming, and results in harder-to-maintain code. Wouldn't it be nice if we could automate this
+at build time?
 
 That's exactly what this plugin does. For each category of `typeof` (including `foo === null` and `foo === undefined`), we define
-a Rollup module (e.g. `isNull()`, `isUndefined()`), and replace each invocation of `typeof` with a function call. Since Rollup handles
+a Rollup module (e.g. `isNull()`, `isUndefined()`), and replace each invocation of `typeof` with a function call.
+
+Since Rollup handles
 all module definitions, we can guarantee that there will only be one instance of each function, and we can also guarantee that
 collisions will be intelligently handled (Rollup will replace the function names with `isNull$1()` etc. in the case of collisions.)
 
