@@ -159,7 +159,7 @@ var patterns = [
   }
 ];
 
-['function', 'number', 'boolean', 'string'].forEach(type => {
+['function', 'number', 'boolean', 'string', 'object'].forEach(type => {
   patterns.push(  {
     name: `is${type.charAt(0).toUpperCase() + type.substring(1)}`,
     func: `function (x) { return typeof x === "${type}" }`,

@@ -30,5 +30,13 @@ console.log(
   typeof foo == 'string',
   typeof bar != 'string',
   'string' == typeof foo,
-  'string' != typeof bar
+  'string' != typeof bar,
+  typeof foo === 'object',
+  typeof bar !== 'object',
+  'object' === typeof foo,
+  'object' !== typeof bar,
+  typeof foo == 'object',
+  typeof bar != 'object',
+  'object' == typeof foo,
+  'object' != typeof bar
 );
