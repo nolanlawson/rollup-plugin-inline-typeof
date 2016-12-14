@@ -39,7 +39,7 @@ export default function inject ( options ) {
     load (id) {
       if (patternImporteeNames.indexOf(id) !== -1) {
         var func = patternImporteeNamesToPatterns[id].func;
-        return `${func.toString().replace(/^function/, `function ${id}`)}; export default ${id};`;
+        return `${func.replace(/^function/, `function ${id}`)}; export default ${id};`;
       }
       return null;
     },
