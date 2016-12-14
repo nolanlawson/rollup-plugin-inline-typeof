@@ -1,5 +1,5 @@
 {
-  "name": "rollup-plugin-inject",
+  "name": "rollup-plugin-inline-functions",
   "description": "Scan modules for global variables and inject `import` statements where necessary",
   "version": "2.0.0",
   "devDependencies": {
