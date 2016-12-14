@@ -10,7 +10,7 @@ This can reduce bundle size and speed up JavaScript execution, as inspired by
 ## Installation
 
 ```bash
-npm install --save-dev rollup-plugin-inject
+npm install --save-dev rollup-plugin-inline-typeof
 ```
 
 ## Usage
