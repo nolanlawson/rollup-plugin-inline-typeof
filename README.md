@@ -32,7 +32,7 @@ rollup({
 Example input:
 
 ```js
-if (typeof foo === 'undefined' && foo === null) {
+if (typeof foo === 'undefined') {
   console.log('yolo');
 }
 ```
@@ -40,11 +40,9 @@ if (typeof foo === 'undefined' && foo === null) {
 Output:
 
 ```js
-function isNull (x) { return x === null }
-
 function isUndefined (x) { return typeof x === "undefined" }
 
-if (isUndefined(foo) && isNull(foo)) {
+if (isUndefined(foo)) {
   console.log('yolo');
 }
 ```
