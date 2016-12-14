@@ -52,5 +52,33 @@ export default [
         }
       }
     ]
+  },
+  {
+      name: 'isNull',
+      func: function (x) { return x === null },
+      tests: [
+      {
+        test (node) {
+          return node.type === 'BinaryExpression' &&
+            node.operator === '===' &&
+            node.right.type === 'Literal' &&
+            node.right.raw === 'null';
+        },
+        getOffsets (node) {
+          return [node.start, node.left.start, node.left.end, node.end];
+        }
+      },
+      {
+        test (node) {
+          return node.type === 'BinaryExpression' &&
+            node.operator === '===' &&
+            node.left.type === 'Literal' &&
+            node.left.raw === 'null';
+        },
+        getOffsets (node) {
+          return [node.start, node.right.start, node.right.end, node.end];
+        }
+      }
+    ]
   }
 ];
