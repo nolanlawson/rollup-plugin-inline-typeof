@@ -102,3 +102,7 @@ collisions will be intelligently handled. (Rollup will replace the function name
 
 In your list of `plugins`, you should probably put `inlineTypeof()` first because it may conflict with other plugins
 (such as `rollup-plugin-commonjs`).
+
+## Credits
+
+Thanks to Rich Harris for [rollup-plugin-inject](https://github.com/rollup/rollup-plugin-inject) and Alex Lur for [rollup-plugin-ignore](https://github.com/alexlur/rollup-plugin-ignore) which I based this codebase off of.
