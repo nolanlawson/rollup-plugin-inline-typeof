@@ -1,0 +1,1 @@
+var expression = typeof foobar === 'undefined';
