@@ -8,3 +8,5 @@ var exp5 = __inject_isUndefined__$1(foobar1);
 var exp6 = __inject_isUndefined__$1(foobaz2);
 var exp7 = __inject_isUndefined__$1(fooqux3);
 var exp8 = __inject_isUndefined__$1(foohaha4);
+var exp9 = __inject_isUndefined__$1(foohaha5);
+var exp10 = __inject_isUndefined__$1(foohaha6);

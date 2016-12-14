@@ -28,6 +28,28 @@ export default [
         getOffsets (node) {
           return [node.start, node.right.argument.start, node.right.argument.end, node.end];
         }
+      },
+      {
+        test (node) {
+          return node.type === 'BinaryExpression' &&
+            node.operator === '===' &&
+            node.right.type === 'Identifier' &&
+            node.right.name === 'undefined';
+        },
+        getOffsets (node) {
+          return [node.start, node.left.start, node.left.end, node.end];
+        }
+      },
+      {
+        test (node) {
+          return node.type === 'BinaryExpression' &&
+            node.operator === '===' &&
+            node.left.type === 'Identifier' &&
+            node.left.name === 'undefined';
+        },
+        getOffsets (node) {
+          return [node.start, node.right.start, node.right.end, node.end];
+        }
       }
     ]
   }

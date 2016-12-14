@@ -6,3 +6,5 @@ var exp5 = 'undefined' === typeof foobar1;
 var exp6 = 'undefined' === typeof foobaz2;
 var exp7 = 'undefined' == typeof fooqux3;
 var exp8 = 'undefined' == typeof foohaha4;
+var exp9 = foohaha5 === undefined;
+var exp10 = undefined === foohaha6;

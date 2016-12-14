@@ -76,7 +76,11 @@ export default function inject ( options ) {
                   newImportHashes[importName] = hash;
                 }
                 var [ leftStart, leftEnd, rightStart, rightEnd ] = test.getOffsets(node);
-                magicString.overwrite(leftStart, leftEnd, `${hash}(`);
+                if (leftStart === leftEnd) {
+                  magicString.insertLeft(leftStart, `${hash}(`);
+                } else {
+                  magicString.overwrite(leftStart, leftEnd, `${hash}(`);
+                }
                 if (rightStart === rightEnd) {
                   magicString.insertRight(rightStart, `)`)
                 } else {
