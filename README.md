@@ -7,6 +7,8 @@ them with functions so that JavaScript engines can inline them.
 This can reduce bundle size and speed up JavaScript execution, as inspired by
  [InfernoJS](http://survivejs.com/blog/inferno-interview/). See [Why](#why) for more details.
 
+_**Note:** very experimental. Please use with care, check your bundle size, and run benchmarks to confirm it's a boost and not a regression._
+
 ## Installation
 
 ```bash
