@@ -3,6 +3,7 @@ import { sep } from 'path';
 import { walk } from 'estree-walker';
 import { parse } from 'acorn';
 import MagicString from 'magic-string';
+import patterns from './patterns';
 
 function tryParse ( code, id ) {
 	try {
@@ -19,25 +20,32 @@ export default function inject ( options ) {
   options = options || {};
 	const sourceMap = options.sourceMap !== false;
 
+  const patternImporteeNames = patterns.map(pattern => `__inject_${pattern.name}__`);
+  const patternImporteeNamesToPatterns = {};
+  patterns.forEach(pattern => {
+    patternImporteeNamesToPatterns[`__inject_${pattern.name}__`] = pattern;
+  })
+
 	return {
 		name: 'inline-functions',
 
     resolveId (importee) {
-      if (importee === '__inject_isUndefined') {
+      if (patternImporteeNames.indexOf(importee) !== -1) {
         return importee;
       }
       return null;
     },
 
     load (id) {
-      if (id === '__inject_isUndefined') {
-        return 'function __inject_isUndefined (x) { return typeof x === "undefined" }; export default __inject_isUndefined;';
+      if (patternImporteeNames.indexOf(id) !== -1) {
+        var func = patternImporteeNamesToPatterns[id].func;
+        return `${func.toString().replace(/^function/, `function ${id}`)}; export default ${id};`;
       }
       return null;
     },
 
 		transform ( code, id ) {
-      if (id === '__inject_isUndefined') {
+      if (patternImporteeNames.indexOf(id) !== -1) {
         return null;
       }
 			const ast = tryParse( code, id );
@@ -55,24 +63,21 @@ export default function inject ( options ) {
 						magicString.addSourcemapLocation( node.end );
 					}
 
-					if (node.type === 'BinaryExpression' &&
-					    node.operator === '===' &&
-					    node.left.type === 'UnaryExpression' &&
-						  node.left.operator === 'typeof' &&
-							node.right.type === 'Literal' &&
-						  node.right.value === 'undefined') {
-						var importName = '__inject_isUndefined';
-            var hash;
-            if (newImports[importName]) {
-              hash = newImportHashes[importName];
-            } else {
-              hash = `${importName}_${Math.round(1000000000 * Math.random())}`;
-              newImports[importName] = `import ${hash} from '${importName}';`;
-              newImportHashes[importName] = hash;
+          patterns.forEach(pattern => {
+            if (pattern.test(node)) {
+              var importName = `__inject_${pattern.name}__`;
+              var hash;
+              if (newImports[importName]) {
+                hash = newImportHashes[importName];
+              } else {
+                hash = `${importName}_${Math.round(1000000000 * Math.random())}`;
+                newImports[importName] = `import ${hash} from '${importName}';`;
+                newImportHashes[importName] = hash;
+              }
+              magicString.overwrite(node.start, node.left.argument.start, `${hash}(`);
+              magicString.overwrite(node.left.argument.end, node.end, `)`)
             }
-						magicString.overwrite(node.start, node.left.argument.start, `${hash}(`);
-            magicString.overwrite(node.left.argument.end, node.end, `)`)
-					}
+          });
 				},
 				leave ( node ) {
 				}
@@ -83,6 +88,8 @@ export default function inject ( options ) {
 
 			const importBlock = keys.map( key => newImports[ key ] ).join( '\n\n' );
 			magicString.prepend( importBlock + '\n\n' );
+
+      console.log('code', magicString.toString());
 
 			return {
 				code: magicString.toString(),
