@@ -64,19 +64,26 @@ export default function inject ( options ) {
 					}
 
           patterns.forEach(pattern => {
-            if (pattern.test(node)) {
-              var importName = `__inject_${pattern.name}__`;
-              var hash;
-              if (newImports[importName]) {
-                hash = newImportHashes[importName];
-              } else {
-                hash = `${importName}_${Math.round(1000000000 * Math.random())}`;
-                newImports[importName] = `import ${hash} from '${importName}';`;
-                newImportHashes[importName] = hash;
+            pattern.tests.forEach(test => {
+              if (test.test(node)) {
+                var importName = `__inject_${pattern.name}__`;
+                var hash;
+                if (newImports[importName]) {
+                  hash = newImportHashes[importName];
+                } else {
+                  hash = `${importName}_${Math.round(1000000000 * Math.random())}`;
+                  newImports[importName] = `import ${hash} from '${importName}';`;
+                  newImportHashes[importName] = hash;
+                }
+                var [ leftStart, leftEnd, rightStart, rightEnd ] = test.getOffsets(node);
+                magicString.overwrite(leftStart, leftEnd, `${hash}(`);
+                if (rightStart === rightEnd) {
+                  magicString.insertRight(rightStart, `)`)
+                } else {
+                  magicString.overwrite(rightStart, rightEnd, `)`)
+                }
               }
-              magicString.overwrite(node.start, node.left.argument.start, `${hash}(`);
-              magicString.overwrite(node.left.argument.end, node.end, `)`)
-            }
+            })
           });
 				},
 				leave ( node ) {
