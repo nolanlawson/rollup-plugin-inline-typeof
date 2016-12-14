@@ -89,8 +89,6 @@ export default function inject ( options ) {
 			const importBlock = keys.map( key => newImports[ key ] ).join( '\n\n' );
 			magicString.prepend( importBlock + '\n\n' );
 
-      console.log('code', magicString.toString());
-
 			return {
 				code: magicString.toString(),
 				map: sourceMap ? magicString.generateMap() : null
