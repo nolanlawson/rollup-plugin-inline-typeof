@@ -7,7 +7,7 @@ process.chdir(__dirname)
 
 /* global describe,it */
 
-describe('rollup-plugin-inject', function () {
+describe('rollup-plugin-inline-typeof', function () {
   var tests = fs.readdirSync('samples')
 
   tests.forEach(function (testName) {
