@@ -76,15 +76,17 @@ export default function inject ( options ) {
                   newImportHashes[importName] = hash;
                 }
                 var [ leftStart, leftEnd, rightStart, rightEnd ] = test.getOffsets(node);
+                var prepend = `${test.negated ? '!' : ''}${hash}(`;
+                var append = `)`;
                 if (leftStart === leftEnd) {
-                  magicString.insertLeft(leftStart, `${hash}(`);
+                  magicString.insertLeft(leftStart, prepend);
                 } else {
-                  magicString.overwrite(leftStart, leftEnd, `${hash}(`);
+                  magicString.overwrite(leftStart, leftEnd, prepend);
                 }
                 if (rightStart === rightEnd) {
-                  magicString.insertRight(rightStart, `)`)
+                  magicString.insertRight(rightStart, append);
                 } else {
-                  magicString.overwrite(rightStart, rightEnd, `)`)
+                  magicString.overwrite(rightStart, rightEnd, append);
                 }
               }
             })
