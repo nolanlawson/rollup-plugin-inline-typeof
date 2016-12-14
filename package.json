@@ -9,12 +9,12 @@
     "standard": "^8.6.0"
   },
   "main": "dist/rollup-plugin-inline-typeof.cjs.js",
-  "jsnext:main": "dist/rollup-plugin-inline-typeof.es6.js",
+  "jsnext:main": "dist/rollup-plugin-inline-typeof.es.js",
   "scripts": {
     "test": "standard && mocha",
     "standard": "standard",
     "pretest": "npm run build",
-    "build": "rollup -c -f cjs -o dist/rollup-plugin-inline-typeof.cjs.js && rollup -c -f es6 -o dist/rollup-plugin-inline-typeof.es6.js",
+    "build": "rollup -c -f cjs -o dist/rollup-plugin-inline-typeof.cjs.js && rollup -c -f es -o dist/rollup-plugin-inline-typeof.es.js",
     "prebuild": "rm -rf dist/*",
     "prepublish": "npm test"
   },

@@ -40,8 +40,9 @@ function inlineTypeof (options) {
 
     load (id) {
       if (patternImporteeNames.indexOf(id) !== -1) {
-        var func = patternImporteeNamesToPatterns[id].func
-        return `${func.replace(/^function/, `function ${id}`)}; export default ${id};`
+        var pattern = patternImporteeNamesToPatterns[id]
+        var func = pattern.func
+        return `export default ${func.replace(/^function/, `function ${pattern.name}`)}`
       }
       return null
     },

@@ -8,3 +8,4 @@ var exp7 = 'undefined' == typeof fooqux3;
 var exp8 = 'undefined' == typeof foohaha4;
 var exp9 = foohaha5 === undefined;
 var exp10 = undefined === foohaha6;
+console.log(exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, exp10);
